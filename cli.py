@@ -23,10 +23,10 @@ class App:
 
         self.COMMANDS = {
             'x': self.cmd_exit,
-            'n': self.cmd_north,
-            's': self.cmd_south,
-            'w': self.cmd_west,
-            'e': self.cmd_east,
+            'n': self.game.input_north,
+            's': self.game.input_south,
+            'w': self.game.input_west,
+            'e': self.game.input_east,
         }
 
     def loop(self):
@@ -70,18 +70,6 @@ class App:
 
     def cmd_exit(self):
         raise EOFError()
-
-    def cmd_north(self):
-        self.game.input_north()
-
-    def cmd_south(self):
-        self.game.input_south()
-
-    def cmd_west(self):
-        self.game.input_west()
-
-    def cmd_east(self):
-        self.game.input_east()
 
 
 if __name__ == '__main__':

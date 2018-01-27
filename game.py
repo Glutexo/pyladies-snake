@@ -5,69 +5,18 @@ class Snake:
         """
         self.coords = [initial_coords]
 
-    def head_coords(self):
+    def slither(self, offset):
         """
-        Returns coordinates of the snake’s head – the last coordinates in the
-        list.
+        Slither relatively from the snake’s head. The head end is extended to
+        the computed coordinates and then the snake’s tail is trimmed.
         """
-        return self.coords[-1]
-
-    def extend_to(self, coords):
-        """
-        Make the snake longer by moving his head to new coordinates. Its
-        previous head coordinates become its body.
-        """
-        self.coords.append(coords)
-
-    def trim_tail(self):
-        """
-        Make the snake shorter by removing the last block of its tail.
-        """
-        del self.coords[0]
-
-    def slither_to(self, coords):
-        """
-        Slither to the given coordinates. Effectively extending the snake to
-        the new coordinates from the head end and then trimming its tail.
-        """
-        self.extend_to(coords)
-        self.trim_tail()
-
-    def slither_north(self):
-        """
-        Slither northward.
-        """
-        # Append new head coordinates one block up from the current head.
-        old_head_coords = self.head_coords()
-        new_head_coords = (old_head_coords[0], old_head_coords[1] - 1)
-        self.slither_to(new_head_coords)
-
-    def slither_south(self):
-        """
-        Slither southward.
-        """
-        # Append new head coordinates one block down from the current head.
-        old_head_coords = self.head_coords()
-        new_head_coords = (old_head_coords[0], old_head_coords[1] + 1)
-        self.slither_to(new_head_coords)
-
-    def slither_west(self):
-        """
-        Slither westward.
-        """
-        # Append new head coordinates one block left from the current head.
-        old_head_coords = self.head_coords()
-        new_head_coords = (old_head_coords[0] - 1, old_head_coords[1])
-        self.slither_to(new_head_coords)
-
-    def slither_east(self):
-        """
-        Slither eastward.
-        """
-        # Append new head coordinates one block right from the current head.
-        old_head_coords = self.head_coords()
-        new_head_coords = (old_head_coords[0] + 1, old_head_coords[1])
-        self.slither_to(new_head_coords)
+        old_head_coords = self.coords[-1]
+        new_head_coords = (
+            old_head_coords[0] + offset[0],
+            old_head_coords[1] + offset[1]
+        )
+        self.coords.append(new_head_coords)  # Move the head
+        del self.coords[0]  # Trim the tail
 
 
 class Game:
@@ -96,24 +45,24 @@ class Game:
 
     def input_north(self):
         """
-        Tells the snake to slither northward.
+        Tells the snake to slither northward: one block up
         """
-        self.snake.slither_north()
+        self.snake.slither((0, -1))
 
     def input_south(self):
         """
-        Tells the snake to slither southward.
+        Tells the snake to slither southward: one block down
         """
-        self.snake.slither_south()
+        self.snake.slither((0, 1))
 
     def input_west(self):
         """
-        Tells the snake to slither westward.
+        Tells the snake to slither westward: one block left
         """
-        self.snake.slither_west()
+        self.snake.slither((-1, 0))
 
     def input_east(self):
         """
-        Tells the snake to slither eastward.
+        Tells the snake to slither eastward: one block right
         """
-        self.snake.slither_east()
+        self.snake.slither((1, 0))
