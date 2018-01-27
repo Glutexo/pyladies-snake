@@ -5,11 +5,18 @@ from had import Game, Snake
 FIELD_SIZE = (11, 13)
 SYMBOLS = {Snake: 'X', None: '.'}
 PROMPT = '🐍: '
+ERROR_UNKNOWN_COMMAND = """
+Unknown command “{cmd}”.
+Available commands:
+x  Exit the game
+"""
 
 class App:
 
     def __init__(self, game):
         self.game = game
+
+        self.COMMANDS = {'x': self.cmd_exit}
 
     def loop(self):
         """
@@ -17,7 +24,12 @@ class App:
         """
         while True:
             self.print_field()
-            input(PROMPT)
+            try:
+                cmd = input(PROMPT)
+                self.run_cmd(cmd)
+            except EOFError:
+                break
+
 
     def print_field(self):
         """
@@ -40,6 +52,14 @@ class App:
             print('')  # \n
         print('')  # \n
 
+    def run_cmd(self, cmd):
+        if cmd in self.COMMANDS:
+            self.COMMANDS[cmd]()
+        else:
+            print(ERROR_UNKNOWN_COMMAND.format(cmd=cmd))
+
+    def cmd_exit(self):
+        raise EOFError()
 
 if __name__ == '__main__':
     """
