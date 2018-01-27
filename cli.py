@@ -9,6 +9,7 @@ ERROR_UNKNOWN_COMMAND = """
 Unknown command “{cmd}”.
 Available commands:
 x  Exit the game
+n  Slither northward ↑
 """
 
 
