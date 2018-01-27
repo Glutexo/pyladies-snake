@@ -27,8 +27,8 @@ class Snake:
 
     def slither_to(self, coords):
         """
-        Slither to the given coordinates. Effectively extending the snake to the
-        new coordinates from the head end and then trimming its tail.
+        Slither to the given coordinates. Effectively extending the snake to
+        the new coordinates from the head end and then trimming its tail.
         """
         self.extend_to(coords)
         self.trim_tail()
@@ -45,6 +45,10 @@ class Snake:
 
 class Game:
     def __init__(self, field_size):
+        """
+        Spawn a snake in the center of the field of a given size. Creates a
+        list of all things on the field.
+        """
         self.field_size = field_size
         self.snake = Snake(self.center_coords())
         self.things = [self.snake]
@@ -56,6 +60,9 @@ class Game:
         return [thing for thing in self.things if coords in thing.coords]
 
     def center_coords(self):
+        """
+        Computes the (approximate for even numbers) center of the game field.
+        """
         max_x = self.field_size[0] - 1
         max_y = self.field_size[1] - 1
         return (max_x // 2, max_y // 2)

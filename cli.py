@@ -11,6 +11,7 @@ Available commands:
 x  Exit the game
 """
 
+
 class App:
 
     def __init__(self, game):
@@ -30,7 +31,6 @@ class App:
             except EOFError:
                 break
 
-
     def print_field(self):
         """
         Prints the current game field state as a text grid.
@@ -41,9 +41,9 @@ class App:
 
                 all_things_on_coords = game.what_is_on_coords((x, y))
                 if all_things_on_coords:
-                    # If there are more things on one coordinates, only the first
-                    # one is printed. Symbol is determined by the class of the
-                    # thing.
+                    # If there are more things on one coordinates, only the
+                    # first one is printed. Symbol is determined by the class
+                    # of the thing.
                     thing_type = type(all_things_on_coords[0])
 
                 # Symbols are horizontally separated by a space for better
