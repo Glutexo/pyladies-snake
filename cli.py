@@ -2,7 +2,7 @@
 from had import Game, Snake
 
 
-FIELD_SIZE = (10, 12)
+FIELD_SIZE = (11, 13)
 SYMBOLS = {Snake: 'X', None: '.'}
 
 
