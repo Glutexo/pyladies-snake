@@ -42,6 +42,33 @@ class Snake:
         new_head_coords = (old_head_coords[0], old_head_coords[1] - 1)
         self.slither_to(new_head_coords)
 
+    def slither_south(self):
+        """
+        Slither southward.
+        """
+        # Append new head coordinates one block down from the current head.
+        old_head_coords = self.head_coords()
+        new_head_coords = (old_head_coords[0], old_head_coords[1] + 1)
+        self.slither_to(new_head_coords)
+
+    def slither_west(self):
+        """
+        Slither westward.
+        """
+        # Append new head coordinates one block left from the current head.
+        old_head_coords = self.head_coords()
+        new_head_coords = (old_head_coords[0] - 1, old_head_coords[1])
+        self.slither_to(new_head_coords)
+
+    def slither_east(self):
+        """
+        Slither eastward.
+        """
+        # Append new head coordinates one block right from the current head.
+        old_head_coords = self.head_coords()
+        new_head_coords = (old_head_coords[0] + 1, old_head_coords[1])
+        self.slither_to(new_head_coords)
+
 
 class Game:
     def __init__(self, field_size):
@@ -72,3 +99,21 @@ class Game:
         Tells the snake to slither northward.
         """
         self.snake.slither_north()
+
+    def input_south(self):
+        """
+        Tells the snake to slither southward.
+        """
+        self.snake.slither_south()
+
+    def input_west(self):
+        """
+        Tells the snake to slither westward.
+        """
+        self.snake.slither_west()
+
+    def input_east(self):
+        """
+        Tells the snake to slither eastward.
+        """
+        self.snake.slither_east()

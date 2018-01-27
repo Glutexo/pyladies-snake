@@ -10,6 +10,9 @@ Unknown command “{cmd}”.
 Available commands:
 x  Exit the game
 n  Slither northward ↑
+s  Slither southward ↓
+w  Slither westward ←
+e  Slither eastward →
 """
 
 
@@ -18,7 +21,13 @@ class App:
     def __init__(self, game):
         self.game = game
 
-        self.COMMANDS = {'x': self.cmd_exit, 'n': self.cmd_north}
+        self.COMMANDS = {
+            'x': self.cmd_exit,
+            'n': self.cmd_north,
+            's': self.cmd_south,
+            'w': self.cmd_west,
+            'e': self.cmd_east,
+        }
 
     def loop(self):
         """
@@ -64,6 +73,15 @@ class App:
 
     def cmd_north(self):
         self.game.input_north()
+
+    def cmd_south(self):
+        self.game.input_south()
+
+    def cmd_west(self):
+        self.game.input_west()
+
+    def cmd_east(self):
+        self.game.input_east()
 
 
 if __name__ == '__main__':
