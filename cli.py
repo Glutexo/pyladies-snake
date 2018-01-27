@@ -16,7 +16,7 @@ class App:
     def __init__(self, game):
         self.game = game
 
-        self.COMMANDS = {'x': self.cmd_exit}
+        self.COMMANDS = {'x': self.cmd_exit, 'n': self.cmd_north}
 
     def loop(self):
         """
@@ -60,6 +60,10 @@ class App:
 
     def cmd_exit(self):
         raise EOFError()
+
+    def cmd_north(self):
+        self.game.input_north()
+
 
 if __name__ == '__main__':
     """
