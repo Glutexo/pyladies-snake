@@ -1,5 +1,5 @@
 # coding=utf-8
-from had import Game, Snake
+from game import Game, Snake
 
 
 FIELD_SIZE = (11, 13)
