@@ -38,7 +38,7 @@ class App:
             try:
                 cmd = input(PROMPT)
                 self.run_cmd(cmd)
-            except EOFError:
+            except EOFError:  # Allows to exit by pressing ⌃D without error
                 break
 
     def print_field(self):
@@ -69,6 +69,9 @@ class App:
             print(ERROR_UNKNOWN_COMMAND.format(cmd=cmd))
 
     def cmd_exit(self):
+        """
+        Break from the game loop.
+        """
         raise EOFError()
 
 
