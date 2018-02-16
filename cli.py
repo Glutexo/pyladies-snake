@@ -41,6 +41,13 @@ class App:
             except EOFError:  # Allows to exit by pressing ⌃D without error
                 break
 
+    def event_game_over(self):
+        """
+        Makes the game over, exits after printing a message
+        """
+        print('Game over!')
+        self._cmd_exit()
+
     def _print_field(self):
         """
         Prints the current game field state as a text grid.
@@ -84,4 +91,6 @@ if __name__ == '__main__':
     """
     game = Game(FIELD_SIZE)
     app = App(game)
+
+    game.register_events(on_collision=app.event_game_over)
     app.loop()

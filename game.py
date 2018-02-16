@@ -10,13 +10,16 @@ class Snake:
         Slither relatively from the snake’s head. The head end is extended to
         the computed coordinates and then the snake’s tail is trimmed.
         """
-        old_head_coords = self.coords[-1]
+        old_head_coords = self.head_coords()
         new_head_coords = (
             old_head_coords[0] + offset[0],
             old_head_coords[1] + offset[1]
         )
         self.coords.append(new_head_coords)  # Move the head
         del self.coords[0]  # Trim the tail
+
+    def head_coords(self):
+        return self.coords[-1]
 
 
 class Game:
@@ -28,6 +31,14 @@ class Game:
         self.field_size = field_size
         self.snake = Snake(self._center_coords())
         self.things = [self.snake]
+
+    def register_events(self, **kwargs):
+        """
+        Registers collision event.
+        """
+        self.events = {
+            'collision': kwargs['on_collision']
+        }
 
     def what_is_on_coords(self, coords):
         """
@@ -75,4 +86,11 @@ class Game:
         max_x = self.field_size[0] - 1
         max_y = self.field_size[1] - 1
         return (max_x // 2, max_y // 2)
+
+    def _check_snake_in_field(self):
         """
+        Checks whether the snake’s head is in the field.
+        """
+        snake_coords = self.snake.head_coords()
+        return 0 <= snake_coords[0] < self.field_size[0] and \
+            0 <= snake_coords[1] < self.field_size[1]
