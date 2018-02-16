@@ -91,6 +91,7 @@ def nl():
     """
     print('')  # \n
 
+
 if __name__ == '__main__':
     """
     Initialize the game and its CLI interace.

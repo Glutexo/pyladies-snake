@@ -75,8 +75,8 @@ class Game:
 
     def _slither(self, offset):
         """
-        Tells the snake to slither with a given offset, checks whether tha snake
-        is still in the field.
+        Tells the snake to slither with a given offset, checks whether the
+        snake is still in the field.
         """
         self.snake.slither(offset)
         if not self._check_snake_in_field():
