@@ -26,7 +26,7 @@ class Game:
         list of all things on the field.
         """
         self.field_size = field_size
-        self.snake = Snake(self.center_coords())
+        self.snake = Snake(self._center_coords())
         self.things = [self.snake]
 
     def what_is_on_coords(self, coords):
@@ -35,34 +35,44 @@ class Game:
         """
         return [thing for thing in self.things if coords in thing.coords]
 
-    def center_coords(self):
+    def input_north(self):
+        """
+        Tells the snake to slither northward: one block up.
+        """
+        self._slither((0, -1))
+
+    def input_south(self):
+        """
+        Tells the snake to slither southward: one block down.
+        """
+        self._slither((0, 1))
+
+    def input_west(self):
+        """
+        Tells the snake to slither westward: one block left.
+        """
+        self._slither((-1, 0))
+
+    def input_east(self):
+        """
+        Tells the snake to slither eastward: one block right.
+        """
+        self._slither((1, 0))
+
+    def _slither(self, offset):
+        """
+        Tells the snake to slither with a given offset, checks whether tha snake
+        is still in the field.
+        """
+        self.snake.slither(offset)
+        if not self._check_snake_in_field():
+            self.events['collision']()
+
+    def _center_coords(self):
         """
         Computes the (approximate for even numbers) center of the game field.
         """
         max_x = self.field_size[0] - 1
         max_y = self.field_size[1] - 1
         return (max_x // 2, max_y // 2)
-
-    def input_north(self):
         """
-        Tells the snake to slither northward: one block up
-        """
-        self.snake.slither((0, -1))
-
-    def input_south(self):
-        """
-        Tells the snake to slither southward: one block down
-        """
-        self.snake.slither((0, 1))
-
-    def input_west(self):
-        """
-        Tells the snake to slither westward: one block left
-        """
-        self.snake.slither((-1, 0))
-
-    def input_east(self):
-        """
-        Tells the snake to slither eastward: one block right
-        """
-        self.snake.slither((1, 0))

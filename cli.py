@@ -22,7 +22,7 @@ class App:
         self.game = game
 
         self.COMMANDS = {
-            'x': self.cmd_exit,
+            'x': self._cmd_exit,
             'n': self.game.input_north,
             's': self.game.input_south,
             'w': self.game.input_west,
@@ -34,14 +34,14 @@ class App:
         Runs the app loop, endlessly promting user for input.
         """
         while True:
-            self.print_field()
+            self._print_field()
             try:
                 cmd = input(PROMPT)
-                self.run_cmd(cmd)
+                self._invoke_cmd(cmd)
             except EOFError:  # Allows to exit by pressing ⌃D without error
                 break
 
-    def print_field(self):
+    def _print_field(self):
         """
         Prints the current game field state as a text grid.
         """
@@ -62,13 +62,16 @@ class App:
             print('')  # \n
         print('')  # \n
 
-    def run_cmd(self, cmd):
+    def _invoke_cmd(self, cmd):
+        """
+        Invoke a command by name, print command list if unknown name given.
+        """
         if cmd in self.COMMANDS:
             self.COMMANDS[cmd]()
         else:
             print(ERROR_UNKNOWN_COMMAND.format(cmd=cmd))
 
-    def cmd_exit(self):
+    def _cmd_exit(self):
         """
         Break from the game loop.
         """
