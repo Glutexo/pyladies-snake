@@ -31,6 +31,9 @@ class Game:
         self.field = Field(field_size)
         self.snake = Snake(self.field.center())
         self.things = [self.snake]
+        self.events = {
+            'collision': noop
+        }
 
     def register_events(self, **kwargs):
         """
@@ -107,3 +110,10 @@ class Field:
         Checks where the given coords are inside the field.
         """
         return 0 <= coords[0] < self.size[0] and 0 <= coords[1] < self.size[1]
+
+
+def noop():
+    """
+    Does nothing.
+    """
+    pass

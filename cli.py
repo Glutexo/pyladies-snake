@@ -66,8 +66,8 @@ class App:
                 # Symbols are horizontally separated by a space for better
                 # legibility.
                 print(SYMBOLS[thing_type], end=' ')  # . . . X . .
-            print('')  # \n
-        print('')  # \n
+            nl()
+        nl()
 
     def _invoke_cmd(self, cmd):
         """
@@ -84,6 +84,12 @@ class App:
         """
         raise EOFError()
 
+
+def nl():
+    """
+    Prints a new-line
+    """
+    print('')  # \n
 
 if __name__ == '__main__':
     """
