@@ -28,8 +28,8 @@ class Game:
         Spawn a snake in the center of the field of a given size. Creates a
         list of all things on the field.
         """
-        self.field_size = field_size
-        self.snake = Snake(self._center_coords())
+        self.field = Field(field_size)
+        self.snake = Snake(self.field.center())
         self.things = [self.snake]
 
     def register_events(self, **kwargs):
@@ -79,18 +79,31 @@ class Game:
         if not self._check_snake_in_field():
             self.events['collision']()
 
-    def _center_coords(self):
-        """
-        Computes the (approximate for even numbers) center of the game field.
-        """
-        max_x = self.field_size[0] - 1
-        max_y = self.field_size[1] - 1
-        return (max_x // 2, max_y // 2)
-
     def _check_snake_in_field(self):
         """
         Checks whether the snake’s head is in the field.
         """
         snake_coords = self.snake.head_coords()
-        return 0 <= snake_coords[0] < self.field_size[0] and \
-            0 <= snake_coords[1] < self.field_size[1]
+        return self.field.is_inside(snake_coords)
+
+
+class Field:
+    def __init__(self, size):
+        """
+        Creates a new game field of a given size
+        """
+        self.size = size
+
+    def center(self):
+        """
+        Computes the (approximate for even numbers) center of the game field.
+        """
+        max_x = self.size[0] - 1
+        max_y = self.size[1] - 1
+        return max_x // 2, max_y // 2
+
+    def is_inside(self, coords):
+        """
+        Checks where the given coords are inside the field.
+        """
+        return 0 <= coords[0] < self.size[0] and 0 <= coords[1] < self.size[1]
