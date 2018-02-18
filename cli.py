@@ -1,9 +1,9 @@
 # coding=utf-8
-from game import Game, Snake
+from game import Game, Snake, Fruit
 
 
 FIELD_SIZE = (11, 13)
-SYMBOLS = {Snake: 'X', None: '.'}
+SYMBOLS = {Snake: 'X', Fruit: '?', None: '.'}
 PROMPT = '🐍: '
 ERROR_UNKNOWN_COMMAND = """
 Unknown command “{cmd}”.
