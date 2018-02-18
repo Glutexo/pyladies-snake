@@ -1,4 +1,8 @@
 class Snake:
+    """
+    🐍
+    """
+
     def __init__(self, initial_coords):
         """
         Creates a new snake of length one block on the given coords.
@@ -23,6 +27,10 @@ class Snake:
 
 
 class Game:
+    """
+    The main game logic. Handles all the game actions including its IO. Emits
+    events to the UI/launcher, provides event methods to be called by the UI.
+    """
     def __init__(self, field_size):
         """
         Spawn a snake in the center of the field of a given size. Creates a
@@ -97,7 +105,12 @@ class Game:
         if self.events[event_name]:
             self.events[event_name]()
 
+
 class Field:
+    """
+    Game field of some size.
+    """
+
     def __init__(self, size):
         """
         Creates a new game field of a given size

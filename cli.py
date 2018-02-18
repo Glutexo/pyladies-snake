@@ -17,6 +17,9 @@ e  Slither eastward →
 
 
 class App:
+    """
+    The game UI: Draws the game field, calls events on input.
+    """
 
     def __init__(self, game):
         self.game = game
@@ -93,9 +96,7 @@ def nl():
 
 
 if __name__ == '__main__':
-    """
-    Initialize the game and its CLI interace.
-    """
+    # Game launcher. Initializes the game and its CLI interace.
     game = Game(FIELD_SIZE)
     app = App(game)
 
