@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from random import randrange
+from random import choice
 
 
 class Snake:
@@ -163,16 +163,37 @@ class Game:
 
     def _spawn_fruit(self, excluded_coords=set()):
         """
-        Spawns a new fruit at random empty coords.
+        Spawns a new fruit at random empty coords, if the field is not
+        completely full.
         """
-        while True:
-            # Randomly try new coords until empty ones are found.
-            fruit_coords = self.field.random_coords()
-            if not self.what_is_on_coords(fruit_coords) and \
-                    fruit_coords not in excluded_coords:
-                break
-        fruit = Fruit(fruit_coords)
-        self.things.add(fruit)
+        fruit_coords = self._random_free_coords(excluded_coords)
+        if fruit_coords:
+            fruit = Fruit(fruit_coords)
+            self.things.add(fruit)
+
+    def _all_occupied_coords(self):
+        """
+        Populates all occupied coords in the field.
+        """
+        return set(
+            thing_coords
+            for thing in self.things
+            for thing_coords in thing.coords
+        )
+
+    def _all_free_coords(self):
+        """
+        Populates all free coords in the field.
+        """
+        return self.field.all_coords() - self._all_occupied_coords()
+
+    def _random_free_coords(self, excluded_coords):
+        """
+        Finds random free coords in the field. Returns None if the fields is
+        completely full.
+        """
+        free_coords = self._all_free_coords() - excluded_coords
+        return choice(list(free_coords)) if free_coords else None
 
 
 class Field:
@@ -194,14 +215,18 @@ class Field:
         max_y = self.size[1] - 1
         return max_x // 2, max_y // 2
 
-    def random_coords(self):
-        """
-        Makes random coords
-        """
-        return randrange(self.size[0]), randrange(self.size[1])
-
     def is_inside(self, coords):
         """
         Checks where the given coords are inside the field.
         """
         return 0 <= coords[0] < self.size[0] and 0 <= coords[1] < self.size[1]
+
+    def all_coords(self):
+        """
+        Populate all coords in the field.
+        """
+        return {
+            (x, y)
+            for x in range(self.size[0])
+            for y in range(self.size[1])
+        }
