@@ -9,21 +9,46 @@ class Snake:
         """
         self.coords = [initial_coords]
 
-    def slither(self, offset):
+    def slither_north(self):
         """
-        Slither relatively from the snake’s head. The head end is extended to
-        the computed coordinates and then the snake’s tail is trimmed.
+        Slithers northward: one block up. Returns the resulting coordinates.
         """
-        old_head_coords = self.head_coords()
-        new_head_coords = (
-            old_head_coords[0] + offset[0],
-            old_head_coords[1] + offset[1]
-        )
-        self.coords.append(new_head_coords)  # Move the head
+        return self._slither((0, -1))
+
+    def slither_south(self):
+        """
+        Slithers southward: one block down. Returns the resulting coordinates.
+        """
+        return self._slither((0, 1))
+
+    def slither_west(self):
+        """
+        Slithers westward: one block left. Returns the resulting coordinates.
+        """
+        return self._slither((-1, 0))
+
+    def slither_east(self):
+        """
+        Slithers eastward: one block right. Returns the resulting coordinates.
+        """
+        return self._slither((1, 0))
+
+    def slithered_to(self, coords):
+        """
+        Finish the slithering to the given coordinates.
+        """
+        self.coords.append(coords)  # Move the head
         del self.coords[0]  # Trim the tail
 
     def head_coords(self):
         return self.coords[-1]
+
+    def _slither(self, offset):
+        """
+        Slithers by the given offset. Returns the resulting coordinates.
+        """
+        head_coords = self.head_coords()
+        return head_coords[0] + offset[0], head_coords[1] + offset[1]
 
 
 class Game:
@@ -62,41 +87,36 @@ class Game:
         """
         Tells the snake to slither northward: one block up.
         """
-        self._slither((0, -1))
+        self._slither(self.snake.slither_north)
 
     def input_south(self):
         """
         Tells the snake to slither southward: one block down.
         """
-        self._slither((0, 1))
+        self._slither(self.snake.slither_south)
 
     def input_west(self):
         """
         Tells the snake to slither westward: one block left.
         """
-        self._slither((-1, 0))
+        self._slither(self.snake.slither_west)
 
     def input_east(self):
         """
         Tells the snake to slither eastward: one block right.
         """
-        self._slither((1, 0))
+        self._slither(self.snake.slither_east)
 
-    def _slither(self, offset):
+    def _slither(self, snake_slither_callback):
         """
-        Tells the snake to slither with a given offset, checks whether the
-        snake is still in the field.
+        Tells the snake to slither in a given direction, checks whether the
+        snake remains in the field.
         """
-        self.snake.slither(offset)
-        if not self._check_snake_in_field():
+        new_head_coords = snake_slither_callback()
+        if self.field.is_inside(new_head_coords):
+            self.snake.slithered_to(new_head_coords)
+        else:
             self._fire_event('collision')
-
-    def _check_snake_in_field(self):
-        """
-        Checks whether the snake’s head is in the field.
-        """
-        snake_coords = self.snake.head_coords()
-        return self.field.is_inside(snake_coords)
 
     def _fire_event(self, event_name):
         """
