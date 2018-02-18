@@ -26,10 +26,10 @@ class App:
 
         self.COMMANDS = {
             'x': self._cmd_exit,
-            'n': self.game.input_north,
-            's': self.game.input_south,
-            'w': self.game.input_west,
-            'e': self.game.input_east,
+            'n': self.game.slither_north,
+            's': self.game.slither_south,
+            'w': self.game.slither_west,
+            'e': self.game.slither_east,
         }
 
     def loop(self):

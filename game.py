@@ -101,25 +101,25 @@ class Game:
         """
         return [thing for thing in self.things if coords in thing.coords]
 
-    def input_north(self):
+    def slither_north(self):
         """
         Tells the snake to slither northward: one block up.
         """
         self._slither(self.snake.slither_north)
 
-    def input_south(self):
+    def slither_south(self):
         """
         Tells the snake to slither southward: one block down.
         """
         self._slither(self.snake.slither_south)
 
-    def input_west(self):
+    def slither_west(self):
         """
         Tells the snake to slither westward: one block left.
         """
         self._slither(self.snake.slither_west)
 
-    def input_east(self):
+    def slither_east(self):
         """
         Tells the snake to slither eastward: one block right.
         """
