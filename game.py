@@ -31,8 +31,9 @@ class Game:
         self.field = Field(field_size)
         self.snake = Snake(self.field.center())
         self.things = [self.snake]
+
         self.events = {
-            'collision': noop
+            'collision': None
         }
 
     def register_events(self, **kwargs):
@@ -80,7 +81,7 @@ class Game:
         """
         self.snake.slither(offset)
         if not self._check_snake_in_field():
-            self.events['collision']()
+            self._fire_event('collision')
 
     def _check_snake_in_field(self):
         """
@@ -89,6 +90,12 @@ class Game:
         snake_coords = self.snake.head_coords()
         return self.field.is_inside(snake_coords)
 
+    def _fire_event(self, event_name):
+        """
+        Fires a registered event.
+        """
+        if self.events[event_name]:
+            self.events[event_name]()
 
 class Field:
     def __init__(self, size):
@@ -110,10 +117,3 @@ class Field:
         Checks where the given coords are inside the field.
         """
         return 0 <= coords[0] < self.size[0] and 0 <= coords[1] < self.size[1]
-
-
-def noop():
-    """
-    Does nothing.
-    """
-    pass
