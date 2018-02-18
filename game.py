@@ -1,4 +1,7 @@
+# coding=utf-8
+
 from random import randrange
+
 
 class Snake:
     """
@@ -46,6 +49,9 @@ class Snake:
             del self.coords[0]  # Trim the tail
 
     def head_coords(self):
+        """
+        Returns single coordinates of the snake’s head.
+        """
         return self.coords[-1]
 
     def _slither(self, offset):
