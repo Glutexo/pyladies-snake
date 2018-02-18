@@ -52,8 +52,8 @@ class App:
         """
         Prints the current game field state as a text grid.
         """
-        for y in range(self.game.field_size[1]):
-            for x in range(self.game.field_size[0]):
+        for y in range(self.game.field.size[1]):
+            for x in range(self.game.field.size[0]):
                 thing_type = None  # Default: nothing on the coords.
 
                 all_things_on_coords = game.what_is_on_coords((x, y))
