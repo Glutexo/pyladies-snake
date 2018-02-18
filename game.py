@@ -142,7 +142,7 @@ class Game:
                 # new one.
                 fruit_eaten = True
                 self.things.remove(thing)
-                self._spawn_fruit()
+                self._spawn_fruit(set([new_head_coords]))
 
         # If the snake has eaten a piece of fruit, it will grow.
         self.snake.slithered_to(new_head_coords, fruit_eaten)
@@ -161,14 +161,15 @@ class Game:
         self.snake = Snake(self.field.center_coords())
         self.things.add(self.snake)
 
-    def _spawn_fruit(self):
+    def _spawn_fruit(self, excluded_coords=set()):
         """
         Spawns a new fruit at random empty coords.
         """
         while True:
             # Randomly try new coords until empty ones are found.
             fruit_coords = self.field.random_coords()
-            if not self.what_is_on_coords(fruit_coords):
+            if not self.what_is_on_coords(fruit_coords) and \
+                    fruit_coords not in excluded_coords:
                 break
         fruit = Fruit(fruit_coords)
         self.things.add(fruit)
